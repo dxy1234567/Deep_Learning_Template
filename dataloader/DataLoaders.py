@@ -3,17 +3,9 @@ This script is modified from the work of Abdelrahman Eldesokey.
 Find more details from https://github.com/abdo-eldesokey/nconv
 """
 
-########################################
-__author__ = "Abdelrahman Eldesokey"
-__license__ = "GNU GPLv3"
-__version__ = "0.1"
-__maintainer__ = "Abdelrahman Eldesokey"
-__email__ = "abdo.eldesokey@gmail.com"
-########################################
-
 from torchvision import transforms
 from torch.utils.data import DataLoader, Dataset
-from dataloader.K2DC_Dataset import KittiDepthDataset
+from dataloader.Dataset import KittiDepthDataset
 num_worker = 8
 
 def KittiDataLoader(params):

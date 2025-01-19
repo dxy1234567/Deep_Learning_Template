@@ -1,42 +1,36 @@
-# KITTI Odometry
+# Deep Learning Template
 
-Scenes and characteristics of the dataset, according to sequences.
+For more convenient usage of Deep Learning in different tasks, I am, here, to create a project of deep learning template.
 
-| Sequence | Frames | Scenes and characteristic       |
-| -------- | ------ | ------------------------------- |
-| 00       | 4541   | Town.                           |
-| 01       | 1101   | High way.                       |
-| 02       |        |                                 |
-| 03       |        |                                 |
-| 04       |        |                                 |
-| 05       | 2761   | Town.                           |
-| 06       | 1101   | Straight line.                  |
-| 07       | 1101   | Town.                           |
-| 08       | 4071   | Town, with lots of trees aside. |
-| 09       | 1591   | Long way, around the town.      |
-| 10       | 1201   | Long way.                       |
+From the README, we will have a overview of the whole sturcture of the template.
 
+## 1. Structure
 
+- dataloader
+  - Dataset.py
+  - Dataloader.py
 
-## Scheme
+- modules
+  - losses.py
 
-Sequences `00`, `05` and `07` are to be adopted in our approach as the data to train.
+- trainers
+  - trainer.py
+  - AAATrainer.py
 
+- utils
+  - AverageMeter.py
+  - ErrorMeter.py
+  - saveTensorToImage.py
+  - util.py
 
+- workspace
+  - workspace_a
+    - network.py
+    - params.json
 
-## Our Dataset
+### 1.1 dataloader
 
-| Sequence | Frames | Scenes and characteristic    |
-| -------- | ------ | ---------------------------- |
-| 00       | 1407   | 5th floor of gml by mid360   |
-| 01       | 1405   | 5th floor of gml by xt16     |
-| 02       | 3739   | underground of gml by mid360 |
-| 03       | None   | underground of gml by xt16   |
-| 04       | 3506   | outside of gml by mid360     |
-| 05       | None   | outside of gml by xt16       |
+First thing first, we need to build our own dataset if we want to begin a deep learning project. 
 
 
 
-## Network and Training
-
-Before training, ensure that the `workspace name` and input data `cropping resolution` are correctly set.

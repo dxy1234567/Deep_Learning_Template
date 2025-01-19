@@ -4,14 +4,6 @@ This script is modified from the work of Abdelrahman Eldesokey.
 Find more details from https://github.com/abdo-eldesokey/nconv
 """
 
-########################################
-__author__ = "Abdelrahman Eldesokey"
-__license__ = "GNU GPLv3"
-__version__ = "0.1"
-__maintainer__ = "Abdelrahman Eldesokey"
-__email__ = "abdo.eldesokey@gmail.com"
-########################################
-
 from PIL import Image
 import torch
 import numpy as np
@@ -43,6 +35,23 @@ class KittiDepthDataset(Dataset):
         return len(self.depth)
 
     def __getitem__(self, item):
+        """
+            Params:
+                item: Index of the data
+
+            Returns:
+                depth: Depth image
+                gt: Ground truth image
+                item: Index of the data
+                
+                > The returning data format is Tensor.
+
+            This function is to get the data from the dataset. 
+            
+            What the class `Dataset` know is the path of the data. This function is to read the image (or sth) from the path.
+
+            This function is about READ the data, TURN NUMPY to TENSOR and other operation that the very task needs.
+        """
         if item < 0 or item >= self.__len__():
             return None
 
@@ -64,11 +73,8 @@ class KittiDepthDataset(Dataset):
         # Convert to numpy
         depth = np.array(depth, dtype=np.float16)
         gt = np.array(gt, dtype=np.float16)
-        # cv2.imwrite('test.png', gt)
         gray = np.array(gray, dtype=np.float16)
         C = (depth > 0).astype(float)
-        
-        # test = cv2.imread('test.png', cv2.IMREAD_UNCHANGED)
 
         # Normalize the depth
         depth = depth / self.norm_size  # [0,1]

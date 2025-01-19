@@ -3,14 +3,6 @@ This script is modified from the work of Abdelrahman Eldesokey.
 Find more details from https://github.com/abdo-eldesokey/nconv
 """
 
-########################################
-__author__ = "Abdelrahman Eldesokey"
-__license__ = "GNU GPLv3"
-__version__ = "0.1"
-__maintainer__ = "Abdelrahman Eldesokey"
-__email__ = "abdo.eldesokey@gmail.com"
-########################################
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
