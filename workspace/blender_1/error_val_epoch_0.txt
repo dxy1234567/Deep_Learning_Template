@@ -1,8 +1,8 @@
 Evaluation results on [val], Epoch [0]:
 ==========================================
-[Loss]: nan
-[MAE()]: nan
-[RMSE()]: nan
-[iMAE()]: nan
-[iRMSE()]: nan
-[Time]: 0.0371
+[Loss]: 0.00338942
+[MAE()]: 44.12180081
+[RMSE()]: 144.22213379
+[iMAE()]: 14.01935794
+[iRMSE()]: 48.32432322
+[Time]: 0.0213

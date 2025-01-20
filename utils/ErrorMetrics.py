@@ -17,6 +17,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 
+"""
+    四种误差指标的计算，以nn.Module的形式实现
+"""
+
 
 class iMAE(nn.Module):
     def __init__(self):

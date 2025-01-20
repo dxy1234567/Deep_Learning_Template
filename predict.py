@@ -19,11 +19,7 @@ from modules.losses import *
 import torch.backends.cudnn as cudnn
 
 if __name__ == '__main__':
-
-
-
-    print(torch.cuda.is_available())
-
+#     print(torch.cuda.is_available())
     cudnn.enabled = True
     cudnn.benchmark = True
 
@@ -31,7 +27,6 @@ if __name__ == '__main__':
     os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
     torch.cuda.manual_seed(1)
-
     # Parse Arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('-mode', action='store', dest='mode', default='eval', help='"eval" or "train" mode')
@@ -71,7 +66,6 @@ if __name__ == '__main__':
     model = f.network().to(device)#pos_fn=params['enforce_pos_weights']
     model = nn.DataParallel(model)
 
-
     # Import the trainer
     t = importlib.import_module('trainers.' + params['trainer'])
 
@@ -82,7 +76,6 @@ if __name__ == '__main__':
         mode = 'eval'  # train    eval
         sets = [args.set]  # train  selval
 
-    kk=0
     # Objective function
     objective = locals()[params['loss']]()
 
@@ -99,9 +92,14 @@ if __name__ == '__main__':
 
     mytrainer = t.KittiDepthTrainer(model, params, optimizer, objective, lr_decay, dataloaders,
                                         workspace_dir=exp_dir, sets=sets, use_load_checkpoint=args.chkpt)
+    
+    # --- Configure Done ---
+
+    # --- Data Loading ---
 
     depth_path = '/data/dataset_blender_3/test/depth_2_0105/00000023.png'
     gray_path = '/data/dataset_blender_3/test/gray/00000023.png'
+    gt_path = '/data/dataset_blender_3/test/gt/00000023.png'
 
     input_depth = cv2.imread(depth_path, cv2.IMREAD_UNCHANGED)
     input_gray = cv2.imread(gray_path, cv2.IMREAD_UNCHANGED)

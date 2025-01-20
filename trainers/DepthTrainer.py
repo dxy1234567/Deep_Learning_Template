@@ -23,8 +23,8 @@ import time
 from modules.losses import *
 import cv2
 from utils.util import *
-err_metrics = ['MAE()', 'RMSE()','iMAE()', 'iRMSE()']
 
+err_metrics = ['MAE()', 'RMSE()','iMAE()', 'iRMSE()']
 
 class KittiDepthTrainer(Trainer):
     def __init__(self, net, params, optimizer, objective, lr_scheduler, dataloaders,
@@ -363,7 +363,13 @@ class KittiDepthTrainer(Trainer):
                 torch.cuda.empty_cache()
 
 
-    def predict(self, depth, gray):
+    def predict(self, depth, gray, gt=None):
+        """
+            Params:
+                gt: ground truth depth map, used for evaluation
+
+            
+        """
         # 模型读取存档点
         if self.load_checkpoint(self.use_load_checkpoint):
             print('Checkpoint was loaded successfully!\n')
@@ -377,8 +383,29 @@ class KittiDepthTrainer(Trainer):
 
         # 得到tensor型的输出
         output = outputs[0]
+        if gt == None:
+            return output
+        else:
+            loss_meter = AverageMeter()
+            err = {}
 
-        return output
+            loss = self.objective(output, gt, self.epoch)
+            loss_meter.update(loss.item(), depth.size(0))
+
+            err_metrics = ['MAE', 'RMSE()','iMAE', 'iRMSE']
+            for m in err_metrics:
+                err[m] = AverageMeter()
+
+            for m in err_metrics:  
+                fn = eval(m)  # globals()[m]()
+                error = fn(output, gt)
+                err[m].update(error.item(), depth.size(0))
+
+            print('Evaluation results:\n=============================')
+            print('[{}]: {:.8f}'.format('Loss', loss_meter.avg))
+            for m in err_metrics: print('[{}]: {:.8f}'.format(m, err[m].avg))
+            
+            return output, err
 
     def preprocess(self, depth, gray, norm_size):
         crop = transforms.CenterCrop((480, 832))
@@ -405,10 +432,6 @@ class KittiDepthTrainer(Trainer):
         gray = crop(gray)
 
         return depth, gray
-
-
-
-
 
 
 
